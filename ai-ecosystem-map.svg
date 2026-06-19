@@ -28,6 +28,8 @@
       .legend-title { fill: #172126; font-family: Inter, Arial, sans-serif; font-size: 15px; font-weight: 800; }
       .legend-text { fill: #46565e; font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 560; }
       .footer { fill: #617179; font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 500; }
+      a .chip { cursor: pointer; }
+      a:hover .chip { stroke-width: 2.4; }
     </style>
   </defs>
 
@@ -51,14 +53,14 @@
   <text class="layer-title" x="106" y="848">Power, Real Estate, Cooling, Construction</text>
   <text class="layer-note" x="106" y="876">The physical bottleneck: electricity, substations, land, buildings, liquid cooling, and uptime.</text>
   <g>
-    <rect class="chip" x="688" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="846" fill="#087b83">VRT</text>
-    <rect class="chip" x="792" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="846" fill="#087b83">ETN</text>
-    <rect class="chip" x="896" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="942" y="846" fill="#087b83">PWR</text>
-    <rect class="chip" x="1000" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1046" y="846" fill="#087b83">CEG</text>
-    <rect class="chip" x="1104" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1150" y="846" fill="#087b83">NEE</text>
-    <rect class="chip" x="1208" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1254" y="846" fill="#087b83">EQIX</text>
-    <rect class="chip" x="688" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="894" fill="#087b83">DLR</text>
-    <rect class="chip" x="792" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="894" fill="#087b83">GNRC</text>
+    <a href="https://finance.yahoo.com/quote/VRT/" target="_blank"><rect class="chip" x="688" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="846" fill="#087b83">VRT</text></a>
+    <a href="https://finance.yahoo.com/quote/ETN/" target="_blank"><rect class="chip" x="792" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="846" fill="#087b83">ETN</text></a>
+    <a href="https://finance.yahoo.com/quote/PWR/" target="_blank"><rect class="chip" x="896" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="942" y="846" fill="#087b83">PWR</text></a>
+    <a href="https://finance.yahoo.com/quote/CEG/" target="_blank"><rect class="chip" x="1000" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1046" y="846" fill="#087b83">CEG</text></a>
+    <a href="https://finance.yahoo.com/quote/NEE/" target="_blank"><rect class="chip" x="1104" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1150" y="846" fill="#087b83">NEE</text></a>
+    <a href="https://finance.yahoo.com/quote/EQIX/" target="_blank"><rect class="chip" x="1208" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1254" y="846" fill="#087b83">EQIX</text></a>
+    <a href="https://finance.yahoo.com/quote/DLR/" target="_blank"><rect class="chip" x="688" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="894" fill="#087b83">DLR</text></a>
+    <a href="https://finance.yahoo.com/quote/GNRC/" target="_blank"><rect class="chip" x="792" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="894" fill="#087b83">GNRC</text></a>
   </g>
 
   <!-- Layer 2 -->
@@ -66,17 +68,17 @@
   <text class="layer-title" x="106" y="698">Semiconductors, Memory, Equipment</text>
   <text class="layer-note" x="106" y="726">Accelerators, networking, HBM memory, foundry capacity, and the tools that make chips possible.</text>
   <g>
-    <rect class="chip" x="640" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="686" y="696" fill="#2166f3">NVDA</text>
-    <rect class="chip" x="744" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="790" y="696" fill="#2166f3">AMD</text>
-    <rect class="chip" x="848" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="894" y="696" fill="#6f4bc4">AVGO</text>
-    <rect class="chip" x="952" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="998" y="696" fill="#6f4bc4">MRVL</text>
-    <rect class="chip" x="1056" y="678" width="92" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="chip-text" x="1102" y="696" fill="#b76b00">MU</text>
-    <rect class="chip" x="1160" y="678" width="110" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1215" y="696" fill="#b76b00">SK Hynix</text>
-    <rect class="chip" x="640" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="744" fill="#11835b">TSM</text>
-    <rect class="chip" x="744" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="790" y="744" fill="#11835b">ASML</text>
-    <rect class="chip" x="848" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="894" y="744" fill="#11835b">AMAT</text>
-    <rect class="chip" x="952" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="998" y="744" fill="#11835b">LRCX</text>
-    <rect class="chip" x="1056" y="726" width="116" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1114" y="744" fill="#b76b00">Samsung</text>
+    <a href="https://finance.yahoo.com/quote/NVDA/" target="_blank"><rect class="chip" x="640" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="686" y="696" fill="#2166f3">NVDA</text></a>
+    <a href="https://finance.yahoo.com/quote/AMD/" target="_blank"><rect class="chip" x="744" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="790" y="696" fill="#2166f3">AMD</text></a>
+    <a href="https://finance.yahoo.com/quote/AVGO/" target="_blank"><rect class="chip" x="848" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="894" y="696" fill="#6f4bc4">AVGO</text></a>
+    <a href="https://finance.yahoo.com/quote/MRVL/" target="_blank"><rect class="chip" x="952" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="998" y="696" fill="#6f4bc4">MRVL</text></a>
+    <a href="https://finance.yahoo.com/quote/MU/" target="_blank"><rect class="chip" x="1056" y="678" width="92" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="chip-text" x="1102" y="696" fill="#b76b00">MU</text></a>
+    <a href="https://finance.yahoo.com/quote/000660.KS/" target="_blank"><rect class="chip" x="1160" y="678" width="110" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1215" y="696" fill="#b76b00">SK Hynix</text></a>
+    <a href="https://finance.yahoo.com/quote/TSM/" target="_blank"><rect class="chip" x="640" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="744" fill="#11835b">TSM</text></a>
+    <a href="https://finance.yahoo.com/quote/ASML/" target="_blank"><rect class="chip" x="744" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="790" y="744" fill="#11835b">ASML</text></a>
+    <a href="https://finance.yahoo.com/quote/AMAT/" target="_blank"><rect class="chip" x="848" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="894" y="744" fill="#11835b">AMAT</text></a>
+    <a href="https://finance.yahoo.com/quote/LRCX/" target="_blank"><rect class="chip" x="952" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="998" y="744" fill="#11835b">LRCX</text></a>
+    <a href="https://finance.yahoo.com/quote/005930.KS/" target="_blank"><rect class="chip" x="1056" y="726" width="116" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1114" y="744" fill="#b76b00">Samsung</text></a>
   </g>
 
   <!-- Layer 3 -->
@@ -84,12 +86,12 @@
   <text class="layer-title" x="106" y="548">Cloud Platforms and Hyperscaler AI Factories</text>
   <text class="layer-note" x="106" y="576">Largest capex decision-makers. Their guidance sets the demand signal for the entire stack.</text>
   <g>
-    <rect class="chip" x="676" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="546" fill="#2166f3">MSFT</text>
-    <rect class="chip" x="792" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="844" y="546" fill="#2166f3">AMZN</text>
-    <rect class="chip" x="908" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="960" y="546" fill="#2166f3">GOOGL</text>
-    <rect class="chip" x="1024" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1076" y="546" fill="#2166f3">META</text>
-    <rect class="chip" x="1140" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1192" y="546" fill="#2166f3">ORCL</text>
-    <rect class="chip" x="676" y="576" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="594" fill="#2166f3">IBM</text>
+    <a href="https://finance.yahoo.com/quote/MSFT/" target="_blank"><rect class="chip" x="676" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="546" fill="#2166f3">MSFT</text></a>
+    <a href="https://finance.yahoo.com/quote/AMZN/" target="_blank"><rect class="chip" x="792" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="844" y="546" fill="#2166f3">AMZN</text></a>
+    <a href="https://finance.yahoo.com/quote/GOOGL/" target="_blank"><rect class="chip" x="908" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="960" y="546" fill="#2166f3">GOOGL</text></a>
+    <a href="https://finance.yahoo.com/quote/META/" target="_blank"><rect class="chip" x="1024" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1076" y="546" fill="#2166f3">META</text></a>
+    <a href="https://finance.yahoo.com/quote/ORCL/" target="_blank"><rect class="chip" x="1140" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1192" y="546" fill="#2166f3">ORCL</text></a>
+    <a href="https://finance.yahoo.com/quote/IBM/" target="_blank"><rect class="chip" x="676" y="576" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="594" fill="#2166f3">IBM</text></a>
   </g>
 
   <!-- Layer 4 -->
@@ -99,13 +101,13 @@
   <g>
     <rect class="chip" x="620" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="678" y="396" fill="#43515a">OpenAI</text>
     <rect class="chip" x="748" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="806" y="396" fill="#43515a">Anthropic</text>
-    <rect class="chip" x="876" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="934" y="396" fill="#43515a">Google</text>
-    <rect class="chip" x="1004" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="1062" y="396" fill="#43515a">Meta AI</text>
+    <a href="https://finance.yahoo.com/quote/GOOG/" target="_blank"><rect class="chip" x="876" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="934" y="396" fill="#43515a">Google</text></a>
+    <a href="https://finance.yahoo.com/quote/META/" target="_blank"><rect class="chip" x="1004" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="1062" y="396" fill="#43515a">Meta AI</text></a>
     <rect class="chip" x="1132" y="378" width="84" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="1174" y="396" fill="#43515a">xAI</text>
-    <rect class="chip" x="620" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="678" y="444" fill="#6f4bc4">SNOW</text>
-    <rect class="chip" x="748" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="806" y="444" fill="#6f4bc4">DDOG</text>
-    <rect class="chip" x="876" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="934" y="444" fill="#6f4bc4">MDB</text>
-    <rect class="chip" x="1004" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="1062" y="444" fill="#6f4bc4">CRWD</text>
+    <a href="https://finance.yahoo.com/quote/SNOW/" target="_blank"><rect class="chip" x="620" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="678" y="444" fill="#6f4bc4">SNOW</text></a>
+    <a href="https://finance.yahoo.com/quote/DDOG/" target="_blank"><rect class="chip" x="748" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="806" y="444" fill="#6f4bc4">DDOG</text></a>
+    <a href="https://finance.yahoo.com/quote/MDB/" target="_blank"><rect class="chip" x="876" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="934" y="444" fill="#6f4bc4">MDB</text></a>
+    <a href="https://finance.yahoo.com/quote/CRWD/" target="_blank"><rect class="chip" x="1004" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="1062" y="444" fill="#6f4bc4">CRWD</text></a>
   </g>
 
   <!-- Layer 5 -->
@@ -113,15 +115,15 @@
   <text class="layer-title" x="106" y="248">Applications, Enterprise Software, Devices</text>
   <text class="layer-note" x="106" y="276">Where AI becomes revenue: productivity, coding, customer operations, analytics, ads, and devices.</text>
   <g>
-    <rect class="chip" x="638" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="246" fill="#11835b">MSFT</text>
-    <rect class="chip" x="746" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="246" fill="#11835b">ADBE</text>
-    <rect class="chip" x="854" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="246" fill="#11835b">CRM</text>
-    <rect class="chip" x="962" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1010" y="246" fill="#11835b">NOW</text>
-    <rect class="chip" x="1070" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1118" y="246" fill="#11835b">PLTR</text>
-    <rect class="chip" x="1178" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1226" y="246" fill="#11835b">AAPL</text>
-    <rect class="chip" x="638" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="294" fill="#11835b">QCOM</text>
-    <rect class="chip" x="746" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="294" fill="#11835b">SHOP</text>
-    <rect class="chip" x="854" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="294" fill="#11835b">META</text>
+    <a href="https://finance.yahoo.com/quote/MSFT/" target="_blank"><rect class="chip" x="638" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="246" fill="#11835b">MSFT</text></a>
+    <a href="https://finance.yahoo.com/quote/ADBE/" target="_blank"><rect class="chip" x="746" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="246" fill="#11835b">ADBE</text></a>
+    <a href="https://finance.yahoo.com/quote/CRM/" target="_blank"><rect class="chip" x="854" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="246" fill="#11835b">CRM</text></a>
+    <a href="https://finance.yahoo.com/quote/NOW/" target="_blank"><rect class="chip" x="962" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1010" y="246" fill="#11835b">NOW</text></a>
+    <a href="https://finance.yahoo.com/quote/PLTR/" target="_blank"><rect class="chip" x="1070" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1118" y="246" fill="#11835b">PLTR</text></a>
+    <a href="https://finance.yahoo.com/quote/AAPL/" target="_blank"><rect class="chip" x="1178" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1226" y="246" fill="#11835b">AAPL</text></a>
+    <a href="https://finance.yahoo.com/quote/QCOM/" target="_blank"><rect class="chip" x="638" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="294" fill="#11835b">QCOM</text></a>
+    <a href="https://finance.yahoo.com/quote/SHOP/" target="_blank"><rect class="chip" x="746" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="294" fill="#11835b">SHOP</text></a>
+    <a href="https://finance.yahoo.com/quote/META/" target="_blank"><rect class="chip" x="854" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="294" fill="#11835b">META</text></a>
   </g>
 
   <!-- Side investor signals -->
