@@ -77,6 +77,10 @@
       font-size: 14px;
     }
 
+    .button-link:hover {
+      border-color: #aebac0;
+    }
+
     .app {
       min-height: 100vh;
       display: grid;
@@ -453,6 +457,15 @@
       font-weight: 800;
     }
 
+    .ticker-link {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .ticker-link:hover {
+      text-decoration: underline;
+    }
+
     .small {
       color: var(--muted);
       font-size: 12px;
@@ -594,6 +607,99 @@
       line-height: 1.45;
     }
 
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .mini-link {
+      min-height: 28px;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 680;
+    }
+
+    .mini-link:hover {
+      border-color: #aebac0;
+    }
+
+    .news-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .news-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .news-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--soft-line);
+      align-items: start;
+    }
+
+    .news-item:last-child {
+      border-bottom: 0;
+    }
+
+    .news-title {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 760;
+      text-decoration: none;
+      line-height: 1.35;
+    }
+
+    .news-title:hover {
+      text-decoration: underline;
+    }
+
+    .news-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .link-table {
+      display: grid;
+      gap: 0;
+    }
+
+    .link-table-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .link-table-row:last-child {
+      border-bottom: 0;
+    }
+
     @media (max-width: 1050px) {
       .app {
         grid-template-columns: 1fr;
@@ -619,6 +725,7 @@
       .kpis,
       .content-grid,
       .split,
+      .news-layout,
       .watch-grid,
       .holdings-grid,
       .form-grid {
@@ -650,6 +757,7 @@
       .kpis,
       .content-grid,
       .split,
+      .news-layout,
       .watch-grid,
       .holdings-grid,
       .form-grid {
@@ -676,6 +784,7 @@
       <nav aria-label="Dashboard views">
         <button class="nav-button active" data-view="overview"><span class="nav-icon">▦</span>Overview</button>
         <button class="nav-button" data-view="holdings"><span class="nav-icon">◉</span>My Holdings</button>
+        <button class="nav-button" data-view="news"><span class="nav-icon">⌁</span>News & Links</button>
         <button class="nav-button" data-view="ecosystem"><span class="nav-icon">◎</span>Ecosystem Map</button>
         <button class="nav-button" data-view="companies"><span class="nav-icon">≡</span>Company Data</button>
         <button class="nav-button" data-view="watchlist"><span class="nav-icon">◆</span>Supplier Watchlist</button>
@@ -852,6 +961,65 @@
                 <span class="badge watch">Watch</span>
               </div>
             </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section grid" id="news">
+        <div class="grid kpis">
+          <article class="panel kpi">
+            <div class="kpi-label">News Mode</div>
+            <div class="kpi-value" id="newsModeLabel">Capex</div>
+            <div class="kpi-foot">Live search feed</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Feed Items</div>
+            <div class="kpi-value" id="newsItemCount">0</div>
+            <div class="kpi-foot">Latest headlines loaded</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Holding Links</div>
+            <div class="kpi-value" id="holdingLinkCount">0</div>
+            <div class="kpi-foot">Official / Yahoo / Moomoo</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Fallback</div>
+            <div class="kpi-value">Search</div>
+            <div class="kpi-foot">Direct links work if RSS is blocked</div>
+          </article>
+        </div>
+
+        <div class="news-layout">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Latest AI Capex News</h2>
+              <div class="news-controls">
+                <select id="newsTopic" aria-label="News topic">
+                  <option value="capex">AI capex</option>
+                  <option value="hyperscalers">Hyperscalers</option>
+                  <option value="chips">AI chips and HBM</option>
+                  <option value="portfolio">Your holdings</option>
+                </select>
+                <button id="refreshNews">Refresh</button>
+                <a class="button-link" id="openNewsSearch" href="#" target="_blank" rel="noopener">Open Search</a>
+              </div>
+            </div>
+            <div class="news-list" id="newsList">
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Loading news feed</div>
+                  <div class="metric-note">Fetching the latest AI capex headlines.</div>
+                </div>
+                <span class="badge neutral">Live</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Ticker Link-Outs</h2>
+            </div>
+            <div class="link-table" id="tickerLinks"></div>
           </article>
         </div>
       </section>
@@ -1254,6 +1422,70 @@
       }
     ];
 
+    const tickerLinks = {
+      BTC: {
+        official: "https://bitcoin.org/en/",
+        yahoo: "https://finance.yahoo.com/quote/BTC-USD/",
+        moomoo: "https://www.moomoo.com/search/result?keyword=BTC",
+        news: "https://news.google.com/search?q=Bitcoin%20BTC"
+      },
+      "SK Hynix": {
+        official: "https://www.skhynix.com/ir/UI-FR-IR0101",
+        yahoo: "https://finance.yahoo.com/quote/000660.KS/",
+        moomoo: "https://www.moomoo.com/search/result?keyword=SK%20Hynix",
+        news: "https://news.google.com/search?q=SK%20Hynix%20HBM%20AI"
+      },
+      NVDA: {
+        official: "https://investor.nvidia.com/",
+        yahoo: "https://finance.yahoo.com/quote/NVDA/",
+        moomoo: "https://www.moomoo.com/stock/NVDA-US",
+        news: "https://news.google.com/search?q=Nvidia%20AI%20capex"
+      },
+      CRCL: {
+        official: "https://investor.circle.com/",
+        yahoo: "https://finance.yahoo.com/quote/CRCL/",
+        moomoo: "https://www.moomoo.com/search/result?keyword=CRCL",
+        news: "https://news.google.com/search?q=Circle%20CRCL%20stablecoin"
+      },
+      NOK: {
+        official: "https://www.nokia.com/about-us/investors/",
+        yahoo: "https://finance.yahoo.com/quote/NOK/",
+        moomoo: "https://www.moomoo.com/stock/NOK-US",
+        news: "https://news.google.com/search?q=Nokia%20data%20center%20AI%20networking"
+      },
+      XIACY: {
+        official: "https://ir.mi.com/",
+        yahoo: "https://finance.yahoo.com/quote/XIACY/",
+        moomoo: "https://www.moomoo.com/search/result?keyword=Xiaomi",
+        news: "https://news.google.com/search?q=Xiaomi%20AI%20devices%20EV"
+      },
+      GOOG: {
+        official: "https://abc.xyz/investor/",
+        yahoo: "https://finance.yahoo.com/quote/GOOG/",
+        moomoo: "https://www.moomoo.com/stock/GOOG-US",
+        news: "https://news.google.com/search?q=Google%20AI%20capex%20cloud"
+      }
+    };
+
+    const newsTopics = {
+      capex: {
+        label: "Capex",
+        query: "AI capex hyperscaler data center spending Microsoft Google Amazon Meta Nvidia"
+      },
+      hyperscalers: {
+        label: "Cloud",
+        query: "hyperscaler AI infrastructure capex cloud data centers earnings guidance"
+      },
+      chips: {
+        label: "Chips",
+        query: "AI chips Nvidia HBM SK Hynix TSMC data center demand"
+      },
+      portfolio: {
+        label: "Portfolio",
+        query: "Nvidia SK Hynix Google Circle Nokia Xiaomi Bitcoin AI market"
+      }
+    };
+
     let state = loadState();
     let chartMode = "capex";
 
@@ -1272,6 +1504,14 @@
       holdingExposure: document.getElementById("holdingExposure"),
       capexSensitiveCount: document.getElementById("capexSensitiveCount"),
       holdingRiskMix: document.getElementById("holdingRiskMix"),
+      newsModeLabel: document.getElementById("newsModeLabel"),
+      newsItemCount: document.getElementById("newsItemCount"),
+      holdingLinkCount: document.getElementById("holdingLinkCount"),
+      newsTopic: document.getElementById("newsTopic"),
+      newsList: document.getElementById("newsList"),
+      refreshNews: document.getElementById("refreshNews"),
+      openNewsSearch: document.getElementById("openNewsSearch"),
+      tickerLinks: document.getElementById("tickerLinks"),
       chart: document.getElementById("mainChart"),
       chartTitle: document.getElementById("chartTitle"),
       segmentFilter: document.getElementById("segmentFilter"),
@@ -1364,6 +1604,7 @@
         button.classList.toggle("active", button.dataset.view === view);
       });
       if (view === "overview") drawChart();
+      if (view === "news" && !els.newsList.dataset.loaded) loadNews();
     }
 
     function addRow() {
@@ -1468,7 +1709,7 @@
         <article class="watch-item">
           <div class="watch-top">
             <div>
-              <div class="ticker">${escapeHtml(item.ticker)}</div>
+              <a class="ticker ticker-link" href="${escapeAttr(getTickerLinks(item.ticker).official)}" target="_blank" rel="noopener">${escapeHtml(item.ticker)}</a>
               <div class="small">${escapeHtml(item.layer)} · ${escapeHtml(item.sensitivity)}</div>
             </div>
             <span class="badge ${signalClass(item.signal)}">${escapeHtml(item.signal)}</span>
@@ -1480,6 +1721,7 @@
             </div>
           </div>
           <div class="small">${percent(item.exposure)}</div>
+          ${renderMiniLinks(item.ticker)}
         </article>
       `).join("");
     }
@@ -1503,7 +1745,7 @@
         <article class="holding-card">
           <div class="holding-top">
             <div>
-              <div class="ticker">${escapeHtml(item.ticker)}</div>
+              <a class="ticker ticker-link" href="${escapeAttr(getTickerLinks(item.ticker).official)}" target="_blank" rel="noopener">${escapeHtml(item.ticker)}</a>
               <div class="holding-name">${escapeHtml(item.name)}</div>
             </div>
             <span class="badge ${signalClass(item.risk)}">${escapeHtml(item.risk)}</span>
@@ -1520,6 +1762,7 @@
             <div class="holding-line"><strong>Role</strong><span>${escapeHtml(item.role)}</span></div>
           </div>
           <div class="holding-note">${escapeHtml(item.thesis)}</div>
+          ${renderMiniLinks(item.ticker)}
         </article>
       `).join("");
 
@@ -1532,6 +1775,120 @@
           <span class="badge ${signalClass(item.risk)}">${escapeHtml(item.risk)}</span>
         </div>
       `).join("");
+    }
+
+    function getTickerLinks(ticker) {
+      return tickerLinks[ticker] || {
+        official: `https://www.google.com/search?q=${encodeURIComponent(`${ticker} investor relations`)}`,
+        yahoo: `https://finance.yahoo.com/lookup?s=${encodeURIComponent(ticker)}`,
+        moomoo: `https://www.moomoo.com/search/result?keyword=${encodeURIComponent(ticker)}`,
+        news: `https://news.google.com/search?q=${encodeURIComponent(ticker)}`
+      };
+    }
+
+    function renderMiniLinks(ticker) {
+      const links = getTickerLinks(ticker);
+      return `
+        <div class="link-row" aria-label="${escapeAttr(ticker)} links">
+          <a class="mini-link" href="${escapeAttr(links.official)}" target="_blank" rel="noopener">Official</a>
+          <a class="mini-link" href="${escapeAttr(links.yahoo)}" target="_blank" rel="noopener">Yahoo</a>
+          <a class="mini-link" href="${escapeAttr(links.moomoo)}" target="_blank" rel="noopener">Moomoo</a>
+          <a class="mini-link" href="${escapeAttr(links.news)}" target="_blank" rel="noopener">News</a>
+        </div>
+      `;
+    }
+
+    function renderTickerLinks() {
+      const holdings = state.holdings || [];
+      els.holdingLinkCount.textContent = holdings.length;
+      els.tickerLinks.innerHTML = holdings.map(item => `
+        <div class="link-table-row">
+          <div>
+            <a class="ticker ticker-link" href="${escapeAttr(getTickerLinks(item.ticker).official)}" target="_blank" rel="noopener">${escapeHtml(item.ticker)}</a>
+            <div class="small">${escapeHtml(item.name)}</div>
+          </div>
+          ${renderMiniLinks(item.ticker)}
+        </div>
+      `).join("");
+    }
+
+    function currentNewsTopic() {
+      return newsTopics[els.newsTopic.value] || newsTopics.capex;
+    }
+
+    function googleNewsSearchUrl(query) {
+      return `https://news.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function googleNewsRssUrl(query) {
+      return `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+    }
+
+    async function loadNews() {
+      const topic = currentNewsTopic();
+      const searchUrl = googleNewsSearchUrl(topic.query);
+      const rssUrl = googleNewsRssUrl(topic.query);
+      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+
+      els.newsModeLabel.textContent = topic.label;
+      els.newsItemCount.textContent = "…";
+      els.openNewsSearch.href = searchUrl;
+      els.newsList.dataset.loaded = "true";
+      els.newsList.innerHTML = `
+        <div class="metric-row">
+          <div>
+            <div class="metric-title">Loading live headlines</div>
+            <div class="metric-note">If the feed proxy is unavailable, use Open Search for the same query.</div>
+          </div>
+          <span class="badge neutral">Live</span>
+        </div>
+      `;
+
+      try {
+        const response = await fetch(proxyUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error("Feed request failed");
+        const text = await response.text();
+        const xml = new DOMParser().parseFromString(text, "application/xml");
+        const items = [...xml.querySelectorAll("item")].slice(0, 10).map(item => ({
+          title: item.querySelector("title")?.textContent || "Untitled",
+          link: item.querySelector("link")?.textContent || searchUrl,
+          source: item.querySelector("source")?.textContent || "Google News",
+          date: item.querySelector("pubDate")?.textContent || ""
+        }));
+        if (!items.length) throw new Error("No feed items");
+        els.newsItemCount.textContent = items.length;
+        els.newsList.innerHTML = items.map(item => `
+          <article class="news-item">
+            <div>
+              <a class="news-title" href="${escapeAttr(item.link)}" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
+              <div class="news-meta">${escapeHtml(item.source)}${item.date ? ` · ${escapeHtml(formatDate(item.date))}` : ""}</div>
+            </div>
+            <span class="badge neutral">News</span>
+          </article>
+        `).join("");
+      } catch (error) {
+        els.newsItemCount.textContent = "0";
+        els.newsList.innerHTML = `
+          <div class="metric-row">
+            <div>
+              <div class="metric-title">Live feed blocked</div>
+              <div class="metric-note">The public RSS proxy did not respond. Open the same live Google News query directly.</div>
+            </div>
+            <a class="button-link" href="${escapeAttr(searchUrl)}" target="_blank" rel="noopener">Open Search</a>
+          </div>
+        `;
+      }
+    }
+
+    function formatDate(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleString(undefined, {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
     }
 
     function drawChart() {
@@ -1677,6 +2034,7 @@
       renderTable();
       renderWatchlist();
       renderHoldings();
+      renderTickerLinks();
       drawChart();
     }
 
@@ -1702,6 +2060,8 @@
 
     els.segmentFilter.addEventListener("change", render);
     els.watchFilter.addEventListener("change", renderWatchlist);
+    els.newsTopic.addEventListener("change", loadNews);
+    els.refreshNews.addEventListener("click", loadNews);
 
     els.dataRows.addEventListener("change", event => {
       const input = event.target;
