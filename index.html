@@ -701,6 +701,60 @@
       border-bottom: 0;
     }
 
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .macro-card {
+      border: 1px solid var(--soft-line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      min-height: 178px;
+      padding: 13px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .macro-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .macro-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .macro-symbol {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .macro-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .macro-rule {
+      display: grid;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .macro-rule strong {
+      color: var(--muted);
+      font-weight: 720;
+    }
+
     @media (max-width: 1050px) {
       .app {
         grid-template-columns: 1fr;
@@ -729,6 +783,7 @@
       .news-layout,
       .watch-grid,
       .holdings-grid,
+      .macro-grid,
       .form-grid {
         grid-template-columns: 1fr 1fr;
       }
@@ -761,6 +816,7 @@
       .news-layout,
       .watch-grid,
       .holdings-grid,
+      .macro-grid,
       .form-grid {
         grid-template-columns: 1fr;
       }
@@ -785,6 +841,7 @@
       <nav aria-label="Dashboard views">
         <button class="nav-button active" data-view="overview"><span class="nav-icon">▦</span>Overview</button>
         <button class="nav-button" data-view="holdings"><span class="nav-icon">◉</span>My Holdings</button>
+        <button class="nav-button" data-view="macro"><span class="nav-icon">◇</span>Macro</button>
         <button class="nav-button" data-view="news"><span class="nav-icon">⌁</span>News & Links</button>
         <button class="nav-button" data-view="ecosystem"><span class="nav-icon">◎</span>Ecosystem Map</button>
         <button class="nav-button" data-view="companies"><span class="nav-icon">≡</span>Company Data</button>
@@ -960,6 +1017,79 @@
                   <div class="metric-note">BTC, CRCL, NOK, and Xiaomi are AI-adjacent or liquidity/edge-device plays rather than pure capex beneficiaries.</div>
                 </div>
                 <span class="badge watch">Watch</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section grid" id="macro">
+        <div class="grid kpis">
+          <article class="panel kpi">
+            <div class="kpi-label">Macro Scorecard</div>
+            <div class="kpi-value" id="macroIndicatorCount">0</div>
+            <div class="kpi-foot">Indicators to check weekly</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">AI Multiple Drivers</div>
+            <div class="kpi-value" id="macroDriverMix">0 / 0 / 0</div>
+            <div class="kpi-foot">Rates / liquidity / growth</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Direct Holding Links</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-foot">BTC, SK Hynix, NVDA, CRCL, NOK, Xiaomi, GOOG</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Refresh Cadence</div>
+            <div class="kpi-value">Weekly</div>
+            <div class="kpi-foot">Daily during earnings/Fed weeks</div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Macro Decision Layer</h2>
+            <div class="panel-actions">
+              <a class="button-link" href="https://finance.yahoo.com/markets/" target="_blank" rel="noopener">Yahoo Markets</a>
+              <a class="button-link" href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED</a>
+            </div>
+          </div>
+          <div class="macro-grid" id="macroGrid"></div>
+        </article>
+
+        <div class="grid split">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>AI Portfolio Playbook</h2>
+            </div>
+            <div class="metric-list" id="macroPlaybook"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h2>How To Read It</h2>
+            </div>
+            <div class="metric-list">
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Rates and real yields</div>
+                  <div class="metric-note">Lower yields usually help long-duration AI/software multiples; fast yield spikes can hurt even strong fundamentals.</div>
+                </div>
+                <span class="badge watch">Rates</span>
+              </div>
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Dollar and liquidity</div>
+                  <div class="metric-note">A softer dollar, easier liquidity, and improving BTC often support risk appetite for semis and growth equities.</div>
+                </div>
+                <span class="badge bullish">Liquidity</span>
+              </div>
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Growth versus inflation</div>
+                  <div class="metric-note">Copper/SOX strength with contained oil is healthier than commodity inflation plus higher yields.</div>
+                </div>
+                <span class="badge neutral">Growth</span>
               </div>
             </div>
           </article>
@@ -1489,6 +1619,159 @@
       }
     };
 
+    const macroIndicators = [
+      {
+        name: "US 10Y Yield",
+        symbol: "DGS10 / ^TNX",
+        driver: "Rates",
+        stance: "Watch",
+        source: "FRED",
+        url: "https://fred.stlouisfed.org/series/DGS10",
+        bullish: "Falling or stable yields",
+        bearish: "Fast yield spike",
+        why: "AI and software multiples are long-duration assets; higher discount rates can compress valuation even when earnings are strong."
+      },
+      {
+        name: "Fed Funds Rate",
+        symbol: "FEDFUNDS",
+        driver: "Rates",
+        stance: "Watch",
+        source: "FRED",
+        url: "https://fred.stlouisfed.org/series/FEDFUNDS",
+        bullish: "Cuts or credible easing path",
+        bearish: "Higher-for-longer repricing",
+        why: "Policy rate expectations shape risk appetite, cost of capital, and how much investors pay for future AI cash flows."
+      },
+      {
+        name: "US Dollar Index",
+        symbol: "DX-Y.NYB",
+        driver: "Liquidity",
+        stance: "Watch",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/DX-Y.NYB/",
+        bullish: "Softer dollar",
+        bearish: "Sharp dollar rally",
+        why: "A strong dollar can tighten global liquidity and pressure overseas earnings translations, especially for global tech."
+      },
+      {
+        name: "VIX",
+        symbol: "^VIX",
+        driver: "Liquidity",
+        stance: "Risk",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/%5EVIX/",
+        bullish: "Below-stress regime",
+        bearish: "Volatility spike",
+        why: "Volatility spikes can force de-risking across high-beta AI, crypto, and semiconductor names."
+      },
+      {
+        name: "Philadelphia Semi Index",
+        symbol: "^SOX",
+        driver: "Growth",
+        stance: "Core",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/%5ESOX/",
+        bullish: "SOX leadership",
+        bearish: "Semis lag broad market",
+        why: "SOX is the cleanest market tape read for semiconductor breadth behind NVDA, SK Hynix, memory, and equipment plays."
+      },
+      {
+        name: "BTC",
+        symbol: "BTC-USD",
+        driver: "Liquidity",
+        stance: "Watch",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/BTC-USD/",
+        bullish: "Risk-on breakout",
+        bearish: "Liquidity breakdown",
+        why: "BTC is not AI capex, but it often reflects liquidity and speculative risk appetite that also affects high-growth equities."
+      },
+      {
+        name: "USD/KRW",
+        symbol: "KRW=X",
+        driver: "FX",
+        stance: "Watch",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/KRW=X/",
+        bullish: "Orderly FX moves",
+        bearish: "KRW stress",
+        why: "Useful for SK Hynix: FX affects reported earnings, export competitiveness, and Korea market risk sentiment."
+      },
+      {
+        name: "Copper",
+        symbol: "HG=F",
+        driver: "Growth",
+        stance: "Neutral",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/HG=F/",
+        bullish: "Growth-led strength",
+        bearish: "Demand breakdown",
+        why: "Copper gives a global growth pulse. Healthy growth helps cyclicals and infrastructure demand."
+      },
+      {
+        name: "WTI Oil",
+        symbol: "CL=F",
+        driver: "Inflation",
+        stance: "Watch",
+        source: "Yahoo",
+        url: "https://finance.yahoo.com/quote/CL=F/",
+        bullish: "Contained oil",
+        bearish: "Inflationary oil spike",
+        why: "Oil shocks can lift inflation expectations, push yields higher, and pressure growth multiples."
+      },
+      {
+        name: "High Yield Spread",
+        symbol: "BAMLH0A0HYM2",
+        driver: "Credit",
+        stance: "Risk",
+        source: "FRED",
+        url: "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        bullish: "Tight/stable spreads",
+        bearish: "Credit spreads widening",
+        why: "Credit stress usually comes before equity risk-off. Watch it when holding BTC, CRCL, and high-beta AI names."
+      },
+      {
+        name: "M2 Money Supply",
+        symbol: "WM2NS",
+        driver: "Liquidity",
+        stance: "Neutral",
+        source: "FRED",
+        url: "https://fred.stlouisfed.org/series/WM2NS",
+        bullish: "Liquidity expansion",
+        bearish: "Liquidity contraction",
+        why: "Broad liquidity conditions matter for speculative assets and valuation multiples."
+      },
+      {
+        name: "Initial Claims",
+        symbol: "ICSA",
+        driver: "Growth",
+        stance: "Watch",
+        source: "FRED",
+        url: "https://fred.stlouisfed.org/series/ICSA",
+        bullish: "Cooling without job stress",
+        bearish: "Labor deterioration",
+        why: "A soft landing backdrop is better for AI capex than a recession scare or renewed inflation panic."
+      }
+    ];
+
+    const macroPlaybook = [
+      {
+        title: "Add / hold bias",
+        badge: "Bullish",
+        signal: "10Y stable or falling, DXY soft, SOX leading, VIX calm, hyperscaler capex still rising."
+      },
+      {
+        title: "Trim / hedge bias",
+        badge: "Watch",
+        signal: "Yields and dollar rise together, oil spikes, SOX loses breadth, or capex guidance slows."
+      },
+      {
+        title: "Protect capital",
+        badge: "Risk",
+        signal: "Credit spreads widen, VIX spikes, BTC breaks down, and semis underperform despite good company news."
+      }
+    ];
+
     let state = loadState();
     let chartMode = "capex";
 
@@ -1515,6 +1798,10 @@
       refreshNews: document.getElementById("refreshNews"),
       openNewsSearch: document.getElementById("openNewsSearch"),
       tickerLinks: document.getElementById("tickerLinks"),
+      macroIndicatorCount: document.getElementById("macroIndicatorCount"),
+      macroDriverMix: document.getElementById("macroDriverMix"),
+      macroGrid: document.getElementById("macroGrid"),
+      macroPlaybook: document.getElementById("macroPlaybook"),
       chart: document.getElementById("mainChart"),
       chartTitle: document.getElementById("chartTitle"),
       segmentFilter: document.getElementById("segmentFilter"),
@@ -1815,6 +2102,48 @@
       `).join("");
     }
 
+    function renderMacro() {
+      const driverCounts = macroIndicators.reduce((counts, item) => {
+        if (["Rates", "Liquidity", "Growth"].includes(item.driver)) {
+          counts[item.driver] = (counts[item.driver] || 0) + 1;
+        }
+        return counts;
+      }, {});
+
+      els.macroIndicatorCount.textContent = macroIndicators.length;
+      els.macroDriverMix.textContent = `${driverCounts.Rates || 0} / ${driverCounts.Liquidity || 0} / ${driverCounts.Growth || 0}`;
+
+      els.macroGrid.innerHTML = macroIndicators.map(item => `
+        <article class="macro-card">
+          <div class="macro-top">
+            <div>
+              <div class="macro-title">${escapeHtml(item.name)}</div>
+              <div class="macro-symbol">${escapeHtml(item.symbol)} · ${escapeHtml(item.driver)}</div>
+            </div>
+            <span class="badge ${signalClass(item.stance)}">${escapeHtml(item.stance)}</span>
+          </div>
+          <div class="macro-rule">
+            <span><strong>Bullish:</strong> ${escapeHtml(item.bullish)}</span>
+            <span><strong>Bearish:</strong> ${escapeHtml(item.bearish)}</span>
+          </div>
+          <div class="macro-note">${escapeHtml(item.why)}</div>
+          <div class="link-row">
+            <a class="mini-link" href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.source)}</a>
+          </div>
+        </article>
+      `).join("");
+
+      els.macroPlaybook.innerHTML = macroPlaybook.map(item => `
+        <div class="metric-row">
+          <div>
+            <div class="metric-title">${escapeHtml(item.title)}</div>
+            <div class="metric-note">${escapeHtml(item.signal)}</div>
+          </div>
+          <span class="badge ${signalClass(item.badge)}">${escapeHtml(item.badge)}</span>
+        </div>
+      `).join("");
+    }
+
     function currentNewsTopic() {
       return newsTopics[els.newsTopic.value] || newsTopics.capex;
     }
@@ -2038,6 +2367,7 @@
       renderWatchlist();
       renderHoldings();
       renderTickerLinks();
+      renderMacro();
       drawChart();
     }
 
