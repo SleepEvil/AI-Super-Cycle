@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title desc">
+  <title id="title">AI Ecosystem Map</title>
+  <desc id="desc">Layered map of the AI infrastructure and application ecosystem, showing important public and private companies by role.</desc>
+  <defs>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset="0.58" stop-color="#183448"/>
+      <stop offset="1" stop-color="#0e6b68"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#172126" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#54707c"/>
+    </marker>
+    <style>
+      .bg { fill: #f4f7f8; }
+      .title { fill: #ffffff; font-family: Inter, Arial, sans-serif; font-size: 42px; font-weight: 800; letter-spacing: 0; }
+      .subtitle { fill: #d7e7ed; font-family: Inter, Arial, sans-serif; font-size: 18px; font-weight: 500; }
+      .layer { fill: #ffffff; stroke: #d9e1e5; stroke-width: 1.2; filter: url(#shadow); }
+      .layer-title { fill: #172126; font-family: Inter, Arial, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 0; }
+      .layer-note { fill: #617179; font-family: Inter, Arial, sans-serif; font-size: 14px; font-weight: 500; }
+      .chip { stroke-width: 1.2; }
+      .chip-text { font-family: Inter, Arial, sans-serif; font-size: 16px; font-weight: 760; text-anchor: middle; dominant-baseline: middle; }
+      .small-text { font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 650; text-anchor: middle; dominant-baseline: middle; }
+      .arrow { fill: none; stroke: #54707c; stroke-width: 2.4; marker-end: url(#arrow); opacity: 0.9; }
+      .dashed { stroke-dasharray: 7 8; }
+      .legend-title { fill: #172126; font-family: Inter, Arial, sans-serif; font-size: 15px; font-weight: 800; }
+      .legend-text { fill: #46565e; font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 560; }
+      .footer { fill: #617179; font-family: Inter, Arial, sans-serif; font-size: 13px; font-weight: 500; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1440" height="1000"/>
+
+  <rect x="44" y="34" width="1352" height="124" rx="14" fill="url(#header)"/>
+  <text class="title" x="78" y="85">AI Ecosystem Map</text>
+  <text class="subtitle" x="80" y="120">Where hyperscaler capex flows, which suppliers benefit, and where monetization shows up.</text>
+  <text class="subtitle" x="1108" y="84" text-anchor="end">Investor lens</text>
+  <text class="subtitle" x="1108" y="116" text-anchor="end">Track capex, margins, backlog, FCF</text>
+
+  <!-- Main flow arrows -->
+  <path class="arrow" d="M 720 826 C 720 790, 720 775, 720 740"/>
+  <path class="arrow" d="M 720 676 C 720 640, 720 624, 720 590"/>
+  <path class="arrow" d="M 720 526 C 720 492, 720 474, 720 440"/>
+  <path class="arrow" d="M 720 376 C 720 342, 720 324, 720 290"/>
+  <path class="arrow" d="M 720 246 C 720 222, 720 202, 720 178"/>
+
+  <!-- Layer 1 -->
+  <rect class="layer" x="76" y="808" width="1288" height="124" rx="12"/>
+  <text class="layer-title" x="106" y="848">Power, Real Estate, Cooling, Construction</text>
+  <text class="layer-note" x="106" y="876">The physical bottleneck: electricity, substations, land, buildings, liquid cooling, and uptime.</text>
+  <g>
+    <rect class="chip" x="688" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="846" fill="#087b83">VRT</text>
+    <rect class="chip" x="792" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="846" fill="#087b83">ETN</text>
+    <rect class="chip" x="896" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="942" y="846" fill="#087b83">PWR</text>
+    <rect class="chip" x="1000" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1046" y="846" fill="#087b83">CEG</text>
+    <rect class="chip" x="1104" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1150" y="846" fill="#087b83">NEE</text>
+    <rect class="chip" x="1208" y="828" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="1254" y="846" fill="#087b83">EQIX</text>
+    <rect class="chip" x="688" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="734" y="894" fill="#087b83">DLR</text>
+    <rect class="chip" x="792" y="876" width="92" height="34" rx="17" fill="#e0f3f1" stroke="#77bdb7"/><text class="chip-text" x="838" y="894" fill="#087b83">GNRC</text>
+  </g>
+
+  <!-- Layer 2 -->
+  <rect class="layer" x="76" y="658" width="1288" height="124" rx="12"/>
+  <text class="layer-title" x="106" y="698">Semiconductors, Memory, Equipment</text>
+  <text class="layer-note" x="106" y="726">Accelerators, networking, HBM memory, foundry capacity, and the tools that make chips possible.</text>
+  <g>
+    <rect class="chip" x="640" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="686" y="696" fill="#2166f3">NVDA</text>
+    <rect class="chip" x="744" y="678" width="92" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="790" y="696" fill="#2166f3">AMD</text>
+    <rect class="chip" x="848" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="894" y="696" fill="#6f4bc4">AVGO</text>
+    <rect class="chip" x="952" y="678" width="92" height="34" rx="17" fill="#eee8fb" stroke="#b69ee8"/><text class="chip-text" x="998" y="696" fill="#6f4bc4">MRVL</text>
+    <rect class="chip" x="1056" y="678" width="92" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="chip-text" x="1102" y="696" fill="#b76b00">MU</text>
+    <rect class="chip" x="1160" y="678" width="110" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1215" y="696" fill="#b76b00">SK Hynix</text>
+    <rect class="chip" x="640" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="744" fill="#11835b">TSM</text>
+    <rect class="chip" x="744" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="790" y="744" fill="#11835b">ASML</text>
+    <rect class="chip" x="848" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="894" y="744" fill="#11835b">AMAT</text>
+    <rect class="chip" x="952" y="726" width="92" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="998" y="744" fill="#11835b">LRCX</text>
+    <rect class="chip" x="1056" y="726" width="116" height="34" rx="17" fill="#fff1d8" stroke="#dfb368"/><text class="small-text" x="1114" y="744" fill="#b76b00">Samsung</text>
+  </g>
+
+  <!-- Layer 3 -->
+  <rect class="layer" x="76" y="508" width="1288" height="124" rx="12"/>
+  <text class="layer-title" x="106" y="548">Cloud Platforms and Hyperscaler AI Factories</text>
+  <text class="layer-note" x="106" y="576">Largest capex decision-makers. Their guidance sets the demand signal for the entire stack.</text>
+  <g>
+    <rect class="chip" x="676" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="546" fill="#2166f3">MSFT</text>
+    <rect class="chip" x="792" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="844" y="546" fill="#2166f3">AMZN</text>
+    <rect class="chip" x="908" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="960" y="546" fill="#2166f3">GOOGL</text>
+    <rect class="chip" x="1024" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1076" y="546" fill="#2166f3">META</text>
+    <rect class="chip" x="1140" y="528" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="1192" y="546" fill="#2166f3">ORCL</text>
+    <rect class="chip" x="676" y="576" width="104" height="34" rx="17" fill="#e6eeff" stroke="#91aef7"/><text class="chip-text" x="728" y="594" fill="#2166f3">IBM</text>
+  </g>
+
+  <!-- Layer 4 -->
+  <rect class="layer" x="76" y="358" width="1288" height="124" rx="12"/>
+  <text class="layer-title" x="106" y="398">Foundation Models, Data, and AI Tooling</text>
+  <text class="layer-note" x="106" y="426">Model labs convert compute into capability; tooling turns models into products and workflows.</text>
+  <g>
+    <rect class="chip" x="620" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="678" y="396" fill="#43515a">OpenAI</text>
+    <rect class="chip" x="748" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="806" y="396" fill="#43515a">Anthropic</text>
+    <rect class="chip" x="876" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="934" y="396" fill="#43515a">Google</text>
+    <rect class="chip" x="1004" y="378" width="116" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="1062" y="396" fill="#43515a">Meta AI</text>
+    <rect class="chip" x="1132" y="378" width="84" height="34" rx="17" fill="#edf2f4" stroke="#bdc9cf"/><text class="small-text" x="1174" y="396" fill="#43515a">xAI</text>
+    <rect class="chip" x="620" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="678" y="444" fill="#6f4bc4">SNOW</text>
+    <rect class="chip" x="748" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="806" y="444" fill="#6f4bc4">DDOG</text>
+    <rect class="chip" x="876" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="934" y="444" fill="#6f4bc4">MDB</text>
+    <rect class="chip" x="1004" y="426" width="116" height="34" rx="17" fill="#f1eefd" stroke="#b9a9ec"/><text class="small-text" x="1062" y="444" fill="#6f4bc4">CRWD</text>
+  </g>
+
+  <!-- Layer 5 -->
+  <rect class="layer" x="76" y="208" width="1288" height="124" rx="12"/>
+  <text class="layer-title" x="106" y="248">Applications, Enterprise Software, Devices</text>
+  <text class="layer-note" x="106" y="276">Where AI becomes revenue: productivity, coding, customer operations, analytics, ads, and devices.</text>
+  <g>
+    <rect class="chip" x="638" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="246" fill="#11835b">MSFT</text>
+    <rect class="chip" x="746" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="246" fill="#11835b">ADBE</text>
+    <rect class="chip" x="854" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="246" fill="#11835b">CRM</text>
+    <rect class="chip" x="962" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1010" y="246" fill="#11835b">NOW</text>
+    <rect class="chip" x="1070" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1118" y="246" fill="#11835b">PLTR</text>
+    <rect class="chip" x="1178" y="228" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="1226" y="246" fill="#11835b">AAPL</text>
+    <rect class="chip" x="638" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="686" y="294" fill="#11835b">QCOM</text>
+    <rect class="chip" x="746" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="794" y="294" fill="#11835b">SHOP</text>
+    <rect class="chip" x="854" y="276" width="96" height="34" rx="17" fill="#e7f4ea" stroke="#92c99f"/><text class="chip-text" x="902" y="294" fill="#11835b">META</text>
+  </g>
+
+  <!-- Side investor signals -->
+  <rect x="106" y="642" width="300" height="36" rx="18" fill="#101820"/>
+  <text class="small-text" x="256" y="661" fill="#ffffff">Capex demand signal</text>
+  <path class="arrow dashed" d="M 406 660 C 480 660, 515 680, 622 694"/>
+
+  <rect x="106" y="492" width="300" height="36" rx="18" fill="#101820"/>
+  <text class="small-text" x="256" y="511" fill="#ffffff">Hyperscaler guidance</text>
+  <path class="arrow dashed" d="M 406 510 C 500 512, 556 530, 656 544"/>
+
+  <rect x="106" y="190" width="300" height="36" rx="18" fill="#101820"/>
+  <text class="small-text" x="256" y="209" fill="#ffffff">Revenue and margin proof</text>
+  <path class="arrow dashed" d="M 406 208 C 500 220, 552 236, 622 246"/>
+
+  <!-- Legend -->
+  <rect x="76" y="950" width="1288" height="36" rx="8" fill="#ffffff" stroke="#d9e1e5"/>
+  <circle cx="104" cy="968" r="7" fill="#2166f3"/><text class="legend-text" x="120" y="973">Hyperscaler / compute demand</text>
+  <circle cx="338" cy="968" r="7" fill="#11835b"/><text class="legend-text" x="354" y="973">Application monetization</text>
+  <circle cx="558" cy="968" r="7" fill="#6f4bc4"/><text class="legend-text" x="574" y="973">Networking / tooling</text>
+  <circle cx="752" cy="968" r="7" fill="#b76b00"/><text class="legend-text" x="768" y="973">Memory</text>
+  <circle cx="862" cy="968" r="7" fill="#087b83"/><text class="legend-text" x="878" y="973">Power and cooling</text>
+  <text class="footer" x="1342" y="973" text-anchor="end">Public tickers mixed with key private model labs</text>
+</svg>

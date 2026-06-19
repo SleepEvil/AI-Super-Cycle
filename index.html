@@ -1,0 +1,1744 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Capex Dashboard</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172126;
+      --muted: #617179;
+      --line: #d7dee2;
+      --soft-line: #e8edef;
+      --panel: #ffffff;
+      --page: #f4f7f8;
+      --blue: #2166f3;
+      --green: #11835b;
+      --amber: #b76b00;
+      --red: #c33a32;
+      --violet: #6f4bc4;
+      --teal: #087b83;
+      --shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--page);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 6px;
+      min-height: 36px;
+      padding: 0 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    button:hover {
+      border-color: #aebac0;
+    }
+
+    button.primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: white;
+    }
+
+    .button-link {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      font-size: 14px;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+    }
+
+    aside {
+      background: #101820;
+      color: #f7fafb;
+      padding: 22px 18px;
+      border-right: 1px solid #0b1116;
+      min-width: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.24)),
+        linear-gradient(135deg, #24a38f, #2166f3);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      right: 5px;
+      bottom: 5px;
+      border: 2px solid rgba(16, 24, 32, 0.76);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-radius: 3px;
+    }
+
+    nav {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .nav-button {
+      width: 100%;
+      background: transparent;
+      color: #d8e1e5;
+      border-color: transparent;
+      box-shadow: none;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 38px;
+      padding: 0 10px;
+    }
+
+    .nav-button.active {
+      background: #1f2d36;
+      color: white;
+      border-color: #32434d;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      color: #8fc9ff;
+    }
+
+    main {
+      min-width: 0;
+      padding: 22px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0 0 4px;
+      letter-spacing: 0;
+      line-height: 1.15;
+    }
+
+    .subhead {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
+
+    .tab {
+      box-shadow: none;
+      background: #e9eff2;
+      border-color: transparent;
+      min-height: 34px;
+    }
+
+    .tab.active {
+      background: var(--ink);
+      color: white;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .kpis {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--soft-line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .kpi {
+      padding: 16px;
+      min-height: 116px;
+      display: grid;
+      align-content: space-between;
+      gap: 14px;
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 780;
+      line-height: 1;
+    }
+
+    .kpi-foot {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .content-grid {
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.8fr);
+      align-items: start;
+    }
+
+    .panel-head {
+      min-height: 56px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--soft-line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    select,
+    input,
+    textarea {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: white;
+      color: var(--ink);
+      min-height: 34px;
+      padding: 6px 9px;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 64px;
+    }
+
+    .chart-wrap {
+      padding: 14px 16px 18px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 320px;
+      display: block;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--soft-line);
+      padding: 9px 10px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: #fbfcfd;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td input,
+    td select {
+      min-width: 92px;
+      min-height: 30px;
+      padding: 4px 7px;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    td input:focus,
+    td select:focus {
+      outline: 2px solid rgba(33, 102, 243, 0.24);
+      background: white;
+      border-color: var(--blue);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      border-radius: 999px;
+      min-height: 24px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 680;
+    }
+
+    .badge.bullish {
+      color: #09583d;
+      background: #dff5ed;
+    }
+
+    .badge.watch {
+      color: #7b4700;
+      background: #fff1d8;
+    }
+
+    .badge.risk {
+      color: #8d211b;
+      background: #ffe2df;
+    }
+
+    .badge.neutral {
+      color: #43515a;
+      background: #edf2f4;
+    }
+
+    .metric-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .metric-row:last-child {
+      border-bottom: 0;
+    }
+
+    .metric-title {
+      font-weight: 680;
+      margin-bottom: 2px;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: normal;
+    }
+
+    .watch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .watch-item {
+      border: 1px solid var(--soft-line);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 120px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      background: #fbfcfd;
+    }
+
+    .watch-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ticker {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 999px;
+      background: #e3e9ec;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px 16px 16px;
+    }
+
+    .form-grid label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .form-grid label.wide {
+      grid-column: span 2;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: grid;
+    }
+
+    .remove-btn {
+      min-width: 34px;
+      width: 34px;
+      padding: 0;
+      box-shadow: none;
+      color: var(--red);
+    }
+
+    .source-box {
+      padding: 14px 16px 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .ecosystem-figure {
+      margin: 0;
+      padding: 14px;
+      overflow: auto;
+      background: #f8fafb;
+    }
+
+    .ecosystem-figure img {
+      display: block;
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+      border: 1px solid var(--soft-line);
+      border-radius: 8px;
+      background: white;
+    }
+
+    .source-row {
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .source-row strong {
+      color: var(--muted);
+    }
+
+    .holdings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .holding-card {
+      border: 1px solid var(--soft-line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      min-height: 210px;
+      padding: 13px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .holding-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .holding-name {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .holding-meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    .holding-line {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .holding-line strong {
+      color: var(--muted);
+      font-weight: 680;
+    }
+
+    .holding-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1050px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        border-right: 0;
+        border-bottom: 1px solid #0b1116;
+        padding: 14px 16px;
+      }
+
+      .brand {
+        margin-bottom: 12px;
+      }
+
+      nav {
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        overflow: auto;
+        padding-bottom: 2px;
+      }
+
+      .kpis,
+      .content-grid,
+      .split,
+      .watch-grid,
+      .holdings-grid,
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .form-grid label.wide {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        padding: 16px;
+      }
+
+      header {
+        display: grid;
+      }
+
+      .toolbar {
+        justify-content: stretch;
+      }
+
+      .toolbar button {
+        flex: 1 1 120px;
+      }
+
+      .kpis,
+      .content-grid,
+      .split,
+      .watch-grid,
+      .holdings-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid label.wide {
+        grid-column: span 1;
+      }
+
+      canvas {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <span>AI Capex Monitor</span>
+      </div>
+      <nav aria-label="Dashboard views">
+        <button class="nav-button active" data-view="overview"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-button" data-view="holdings"><span class="nav-icon">◉</span>My Holdings</button>
+        <button class="nav-button" data-view="ecosystem"><span class="nav-icon">◎</span>Ecosystem Map</button>
+        <button class="nav-button" data-view="companies"><span class="nav-icon">≡</span>Company Data</button>
+        <button class="nav-button" data-view="watchlist"><span class="nav-icon">◆</span>Supplier Watchlist</button>
+        <button class="nav-button" data-view="sources"><span class="nav-icon">↗</span>Sources</button>
+      </nav>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1>AI Capex Dashboard</h1>
+          <p class="subhead">Hyperscaler spending, supplier exposure, and quarterly revision signals.</p>
+        </div>
+        <div class="toolbar">
+          <button id="exportJson" title="Export JSON">Export</button>
+          <button id="importJson" title="Import JSON">Import</button>
+          <button id="resetData" title="Reset data">Reset</button>
+          <button class="primary" id="addRowTop" title="Add company">Add Company</button>
+        </div>
+      </header>
+
+      <div class="tabs" aria-label="Chart mode">
+        <button class="tab active" data-chart="capex">Capex</button>
+        <button class="tab" data-chart="intensity">Intensity</button>
+        <button class="tab" data-chart="fcf">FCF</button>
+      </div>
+
+      <section class="section active grid" id="overview">
+        <div class="grid kpis">
+          <article class="panel kpi">
+            <div class="kpi-label">Tracked Capex</div>
+            <div class="kpi-value" id="totalCapex">$0B</div>
+            <div class="kpi-foot" id="totalCapexFoot">Current quarter data</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Median YoY</div>
+            <div class="kpi-value" id="medianYoy">0%</div>
+            <div class="kpi-foot">Capex growth</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Capex / Revenue</div>
+            <div class="kpi-value" id="avgIntensity">0%</div>
+            <div class="kpi-foot">Weighted by revenue</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Signal Mix</div>
+            <div class="kpi-value" id="signalMix">0 / 0 / 0</div>
+            <div class="kpi-foot">Bullish / watch / risk</div>
+          </article>
+        </div>
+
+        <div class="grid content-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h2 id="chartTitle">Capex by Company</h2>
+              <div class="panel-actions">
+                <select id="segmentFilter" aria-label="Segment filter">
+                  <option value="all">All segments</option>
+                  <option value="Hyperscaler">Hyperscalers</option>
+                  <option value="Supplier">Suppliers</option>
+                  <option value="Power">Power and cooling</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="mainChart" width="1100" height="420"></canvas>
+            </div>
+          </article>
+
+          <div class="grid">
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Decision Signals</h2>
+              </div>
+              <div class="metric-list" id="signals"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Quarterly Checklist</h2>
+              </div>
+              <div class="metric-list">
+                <div class="metric-row">
+                  <div>
+                    <div class="metric-title">Capex revision</div>
+                    <div class="metric-note">Raised guidance with capacity constraints is supplier-positive.</div>
+                  </div>
+                  <span class="badge neutral">Track</span>
+                </div>
+                <div class="metric-row">
+                  <div>
+                    <div class="metric-title">Cloud growth</div>
+                    <div class="metric-note">Revenue acceleration validates infrastructure demand.</div>
+                  </div>
+                  <span class="badge neutral">Track</span>
+                </div>
+                <div class="metric-row">
+                  <div>
+                    <div class="metric-title">FCF pressure</div>
+                    <div class="metric-note">Sustained deterioration raises duration and ROI risk.</div>
+                  </div>
+                  <span class="badge neutral">Track</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid" id="holdings">
+        <div class="grid kpis">
+          <article class="panel kpi">
+            <div class="kpi-label">Holdings</div>
+            <div class="kpi-value" id="holdingCount">0</div>
+            <div class="kpi-foot">Assets in your AI watchlist</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Weighted Exposure</div>
+            <div class="kpi-value" id="holdingExposure">0%</div>
+            <div class="kpi-foot">Equal-weight AI exposure score</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Capex Sensitive</div>
+            <div class="kpi-value" id="capexSensitiveCount">0</div>
+            <div class="kpi-foot">Directly tied to AI infrastructure spend</div>
+          </article>
+          <article class="panel kpi">
+            <div class="kpi-label">Risk Mix</div>
+            <div class="kpi-value" id="holdingRiskMix">0 / 0 / 0</div>
+            <div class="kpi-foot">Core / watch / speculative</div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Your AI Portfolio Lens</h2>
+            <div class="panel-actions">
+              <span class="small">Equal-weight view; add position sizes later for true portfolio weighting.</span>
+            </div>
+          </div>
+          <div class="holdings-grid" id="holdingsGrid"></div>
+        </article>
+
+        <div class="grid split">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>What To Watch</h2>
+            </div>
+            <div class="metric-list" id="holdingWatchItems"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Portfolio Read</h2>
+            </div>
+            <div class="metric-list">
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Most direct AI capex exposure</div>
+                  <div class="metric-note">SK Hynix and Nvidia are most directly linked to hyperscaler compute buildout.</div>
+                </div>
+                <span class="badge bullish">Core</span>
+              </div>
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Monetization anchor</div>
+                  <div class="metric-note">Google is the clearest bridge between AI infrastructure spending and ads/cloud/product revenue.</div>
+                </div>
+                <span class="badge bullish">Core</span>
+              </div>
+              <div class="metric-row">
+                <div>
+                  <div class="metric-title">Diversifiers</div>
+                  <div class="metric-note">BTC, CRCL, NOK, and Xiaomi are AI-adjacent or liquidity/edge-device plays rather than pure capex beneficiaries.</div>
+                </div>
+                <span class="badge watch">Watch</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section grid" id="ecosystem">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>AI Ecosystem Map</h2>
+            <div class="panel-actions">
+              <a class="button-link" href="ai-ecosystem-map.svg" download>Download SVG</a>
+            </div>
+          </div>
+          <figure class="ecosystem-figure">
+            <img src="ai-ecosystem-map.svg" alt="AI ecosystem map showing power, semiconductors, cloud, models, applications, and key companies">
+          </figure>
+        </article>
+      </section>
+
+      <section class="section grid" id="companies">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Company Data</h2>
+            <div class="panel-actions">
+              <button id="addRowTable">Add Row</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Company</th>
+                  <th>Segment</th>
+                  <th>Quarter</th>
+                  <th>Capex $B</th>
+                  <th>YoY %</th>
+                  <th>Revenue $B</th>
+                  <th>FCF $B</th>
+                  <th>Cloud / AI Growth %</th>
+                  <th>Signal</th>
+                  <th>Notes</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="dataRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="section grid" id="watchlist">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Supplier Watchlist</h2>
+            <div class="panel-actions">
+              <select id="watchFilter" aria-label="Supplier filter">
+                <option value="all">All</option>
+                <option value="GPU">GPU</option>
+                <option value="Hyperscaler">Hyperscaler</option>
+                <option value="Memory">Memory</option>
+                <option value="Power">Power</option>
+                <option value="Networking">Networking</option>
+                <option value="Server">Server</option>
+                <option value="Devices">Devices</option>
+                <option value="Fintech">Fintech</option>
+                <option value="Crypto">Crypto</option>
+              </select>
+            </div>
+          </div>
+          <div class="watch-grid" id="watchGrid"></div>
+        </article>
+      </section>
+
+      <section class="section grid" id="sources">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Source Log</h2>
+          </div>
+          <div class="source-box">
+            <div class="source-row">
+              <strong>Primary filings</strong>
+              <span>10-Q, 10-K, earnings release, earnings transcript, investor presentation.</span>
+            </div>
+            <div class="source-row">
+              <strong>Line items</strong>
+              <span>Purchases of property and equipment, finance leases, operating cash flow, free cash flow, depreciation.</span>
+            </div>
+            <div class="source-row">
+              <strong>Management tone</strong>
+              <span>Capacity constrained, component inflation, data center timing, cloud backlog, AI monetization.</span>
+            </div>
+            <div class="source-row">
+              <strong>Starter data</strong>
+              <span>Illustrative seed values from public reporting and earnings commentary. Replace after each earnings release.</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <input id="fileInput" type="file" accept="application/json" hidden>
+
+  <script>
+    const storageKey = "ai-capex-dashboard-v1";
+
+    const seedRows = [
+      {
+        ticker: "MSFT",
+        company: "Microsoft",
+        segment: "Hyperscaler",
+        quarter: "CY2026 plan",
+        capex: 190,
+        yoy: 66,
+        revenue: 320,
+        fcf: 84,
+        cloudGrowth: 39,
+        signal: "Bullish",
+        notes: "Azure demand and AI capacity constraints."
+      },
+      {
+        ticker: "GOOGL",
+        company: "Alphabet",
+        segment: "Hyperscaler",
+        quarter: "CY2026 plan",
+        capex: 185,
+        yoy: 58,
+        revenue: 405,
+        fcf: 92,
+        cloudGrowth: 63,
+        signal: "Bullish",
+        notes: "Cloud backlog and TPU/data center buildout."
+      },
+      {
+        ticker: "AMZN",
+        company: "Amazon",
+        segment: "Hyperscaler",
+        quarter: "CY2026 plan",
+        capex: 205,
+        yoy: 72,
+        revenue: 720,
+        fcf: 60,
+        cloudGrowth: 29,
+        signal: "Watch",
+        notes: "AWS AI demand, retail cash flow sensitivity."
+      },
+      {
+        ticker: "META",
+        company: "Meta Platforms",
+        segment: "Hyperscaler",
+        quarter: "FY2026 guide",
+        capex: 135,
+        yoy: 88,
+        revenue: 235,
+        fcf: 52,
+        cloudGrowth: 33,
+        signal: "Watch",
+        notes: "High AI spend; ad monetization must keep scaling."
+      },
+      {
+        ticker: "ORCL",
+        company: "Oracle",
+        segment: "Hyperscaler",
+        quarter: "FY2026 plan",
+        capex: 35,
+        yoy: 45,
+        revenue: 62,
+        fcf: 8,
+        cloudGrowth: 42,
+        signal: "Watch",
+        notes: "Cloud infrastructure expansion and AI contracts."
+      },
+      {
+        ticker: "NVDA",
+        company: "Nvidia",
+        segment: "Supplier",
+        quarter: "CY2026 monitor",
+        capex: 6,
+        yoy: 20,
+        revenue: 235,
+        fcf: 115,
+        cloudGrowth: 70,
+        signal: "Bullish",
+        notes: "Direct beneficiary of accelerator demand."
+      },
+      {
+        ticker: "SK Hynix",
+        company: "SK Hynix",
+        segment: "Memory",
+        quarter: "CY2026 monitor",
+        capex: 22,
+        yoy: 38,
+        revenue: 78,
+        fcf: 12,
+        cloudGrowth: 72,
+        signal: "Bullish",
+        notes: "HBM memory supplier leveraged to AI accelerator demand."
+      },
+      {
+        ticker: "GOOG",
+        company: "Alphabet",
+        segment: "Hyperscaler",
+        quarter: "CY2026 plan",
+        capex: 185,
+        yoy: 58,
+        revenue: 405,
+        fcf: 92,
+        cloudGrowth: 63,
+        signal: "Bullish",
+        notes: "Search, YouTube, Gemini, TPUs, and Google Cloud AI infrastructure."
+      },
+      {
+        ticker: "CRCL",
+        company: "Circle Internet Group",
+        segment: "Fintech",
+        quarter: "Portfolio monitor",
+        capex: 0.2,
+        yoy: 10,
+        revenue: 2.1,
+        fcf: 0.3,
+        cloudGrowth: 0,
+        signal: "Watch",
+        notes: "Stablecoin infrastructure; less tied to AI capex, more tied to crypto liquidity and rates."
+      },
+      {
+        ticker: "NOK",
+        company: "Nokia",
+        segment: "Networking",
+        quarter: "Portfolio monitor",
+        capex: 0.8,
+        yoy: 5,
+        revenue: 24,
+        fcf: 1.8,
+        cloudGrowth: 8,
+        signal: "Neutral",
+        notes: "Telecom and networking exposure; AI benefit depends on data center and private network traction."
+      },
+      {
+        ticker: "XIACY",
+        company: "Xiaomi",
+        segment: "Devices",
+        quarter: "Portfolio monitor",
+        capex: 3,
+        yoy: 20,
+        revenue: 55,
+        fcf: 4,
+        cloudGrowth: 12,
+        signal: "Watch",
+        notes: "AI edge device and EV ecosystem exposure; not a hyperscaler capex beneficiary."
+      },
+      {
+        ticker: "AMD",
+        company: "Advanced Micro Devices",
+        segment: "Supplier",
+        quarter: "CY2026 monitor",
+        capex: 1,
+        yoy: 15,
+        revenue: 38,
+        fcf: 6,
+        cloudGrowth: 48,
+        signal: "Neutral",
+        notes: "AI accelerator share gains are key."
+      },
+      {
+        ticker: "AVGO",
+        company: "Broadcom",
+        segment: "Networking",
+        quarter: "CY2026 monitor",
+        capex: 2,
+        yoy: 18,
+        revenue: 72,
+        fcf: 34,
+        cloudGrowth: 55,
+        signal: "Bullish",
+        notes: "Custom silicon and AI networking exposure."
+      },
+      {
+        ticker: "MU",
+        company: "Micron",
+        segment: "Memory",
+        quarter: "CY2026 monitor",
+        capex: 18,
+        yoy: 35,
+        revenue: 46,
+        fcf: 4,
+        cloudGrowth: 65,
+        signal: "Watch",
+        notes: "HBM demand vs memory-cycle supply risk."
+      },
+      {
+        ticker: "VRT",
+        company: "Vertiv",
+        segment: "Power",
+        quarter: "CY2026 monitor",
+        capex: 1,
+        yoy: 16,
+        revenue: 11,
+        fcf: 1.4,
+        cloudGrowth: 30,
+        signal: "Bullish",
+        notes: "Data center power and cooling demand."
+      }
+    ];
+
+    const seedWatchlist = [
+      { ticker: "NVDA", layer: "GPU", exposure: 96, sensitivity: "Very high", signal: "Bullish" },
+      { ticker: "SK Hynix", layer: "Memory", exposure: 92, sensitivity: "Very high", signal: "Bullish" },
+      { ticker: "GOOG", layer: "Hyperscaler", exposure: 84, sensitivity: "High", signal: "Bullish" },
+      { ticker: "CRCL", layer: "Fintech", exposure: 22, sensitivity: "Low", signal: "Watch" },
+      { ticker: "NOK", layer: "Networking", exposure: 38, sensitivity: "Medium", signal: "Neutral" },
+      { ticker: "XIACY", layer: "Devices", exposure: 44, sensitivity: "Medium", signal: "Watch" },
+      { ticker: "BTC", layer: "Crypto", exposure: 18, sensitivity: "Low", signal: "Watch" },
+      { ticker: "AVGO", layer: "Networking", exposure: 86, sensitivity: "High", signal: "Bullish" },
+      { ticker: "MU", layer: "Memory", exposure: 78, sensitivity: "High", signal: "Watch" },
+      { ticker: "TSM", layer: "Foundry", exposure: 82, sensitivity: "High", signal: "Bullish" },
+      { ticker: "VRT", layer: "Power", exposure: 74, sensitivity: "High", signal: "Bullish" },
+      { ticker: "ETN", layer: "Power", exposure: 58, sensitivity: "Medium", signal: "Watch" },
+      { ticker: "DELL", layer: "Server", exposure: 62, sensitivity: "Medium", signal: "Watch" },
+      { ticker: "AMD", layer: "GPU", exposure: 64, sensitivity: "Medium", signal: "Neutral" },
+      { ticker: "MRVL", layer: "Networking", exposure: 68, sensitivity: "High", signal: "Watch" }
+    ];
+
+    const seedHoldings = [
+      {
+        ticker: "BTC",
+        name: "Bitcoin",
+        role: "Macro liquidity / digital asset",
+        layer: "Crypto",
+        aiExposure: 18,
+        capexSensitivity: "Low",
+        risk: "Speculative",
+        thesis: "Can benefit from risk appetite and liquidity, but it is not a direct AI infrastructure asset.",
+        watch: "Real yields, dollar liquidity, ETF flows, crypto regulation, stablecoin liquidity."
+      },
+      {
+        ticker: "SK Hynix",
+        name: "SK Hynix",
+        role: "HBM memory supplier",
+        layer: "Memory",
+        aiExposure: 92,
+        capexSensitivity: "Very high",
+        risk: "Core",
+        thesis: "One of the cleaner upstream beneficiaries of AI accelerator demand through HBM supply.",
+        watch: "HBM pricing, Nvidia/AMD qualification, memory cycle supply, capex discipline."
+      },
+      {
+        ticker: "NVDA",
+        name: "Nvidia",
+        role: "AI accelerators and networking",
+        layer: "GPU",
+        aiExposure: 96,
+        capexSensitivity: "Very high",
+        risk: "Core",
+        thesis: "Most direct public equity exposure to hyperscaler AI compute buildout.",
+        watch: "Hyperscaler capex revisions, gross margin, Blackwell/Rubin ramps, custom ASIC competition."
+      },
+      {
+        ticker: "CRCL",
+        name: "Circle",
+        role: "Stablecoin infrastructure",
+        layer: "Fintech",
+        aiExposure: 22,
+        capexSensitivity: "Low",
+        risk: "Speculative",
+        thesis: "More tied to stablecoin adoption, crypto market structure, and interest income than AI capex.",
+        watch: "USDC supply, rate sensitivity, regulation, exchange/payment distribution."
+      },
+      {
+        ticker: "NOK",
+        name: "Nokia",
+        role: "Telecom and networking equipment",
+        layer: "Networking",
+        aiExposure: 38,
+        capexSensitivity: "Medium",
+        risk: "Watch",
+        thesis: "Potential indirect AI networking and private network exposure, but core demand still depends on telecom cycles.",
+        watch: "Carrier capex, data center networking traction, private wireless, margin recovery."
+      },
+      {
+        ticker: "XIACY",
+        name: "Xiaomi",
+        role: "AI devices, IoT, EV ecosystem",
+        layer: "Devices",
+        aiExposure: 44,
+        capexSensitivity: "Medium",
+        risk: "Watch",
+        thesis: "AI shows up through phones, edge devices, and autos, not through hyperscaler infrastructure spend.",
+        watch: "Smartphone share, EV execution, device AI adoption, China consumer demand."
+      },
+      {
+        ticker: "GOOG",
+        name: "Alphabet",
+        role: "Hyperscaler, TPU, Gemini, ads",
+        layer: "Hyperscaler",
+        aiExposure: 84,
+        capexSensitivity: "High",
+        risk: "Core",
+        thesis: "Owns the full stack: chips, cloud, models, distribution, and monetization through search/ads.",
+        watch: "Cloud growth, capex guidance, search AI monetization, TPU economics, FCF after capex."
+      }
+    ];
+
+    let state = loadState();
+    let chartMode = "capex";
+
+    const els = {
+      totalCapex: document.getElementById("totalCapex"),
+      totalCapexFoot: document.getElementById("totalCapexFoot"),
+      medianYoy: document.getElementById("medianYoy"),
+      avgIntensity: document.getElementById("avgIntensity"),
+      signalMix: document.getElementById("signalMix"),
+      dataRows: document.getElementById("dataRows"),
+      signals: document.getElementById("signals"),
+      watchGrid: document.getElementById("watchGrid"),
+      holdingsGrid: document.getElementById("holdingsGrid"),
+      holdingWatchItems: document.getElementById("holdingWatchItems"),
+      holdingCount: document.getElementById("holdingCount"),
+      holdingExposure: document.getElementById("holdingExposure"),
+      capexSensitiveCount: document.getElementById("capexSensitiveCount"),
+      holdingRiskMix: document.getElementById("holdingRiskMix"),
+      chart: document.getElementById("mainChart"),
+      chartTitle: document.getElementById("chartTitle"),
+      segmentFilter: document.getElementById("segmentFilter"),
+      watchFilter: document.getElementById("watchFilter"),
+      fileInput: document.getElementById("fileInput")
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return freshSeedState();
+      try {
+        const parsed = JSON.parse(saved);
+        return {
+          rows: Array.isArray(parsed.rows) ? mergeByTicker(parsed.rows, seedRows) : clone(seedRows),
+          watchlist: Array.isArray(parsed.watchlist) ? mergeByTicker(parsed.watchlist, seedWatchlist) : clone(seedWatchlist),
+          holdings: Array.isArray(parsed.holdings) ? mergeByTicker(parsed.holdings, seedHoldings) : clone(seedHoldings)
+        };
+      } catch {
+        return freshSeedState();
+      }
+    }
+
+    function clone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    function mergeByTicker(savedItems, seedItems) {
+      const saved = clone(savedItems);
+      const keys = new Set(saved.map(item => String(item.ticker || "").toUpperCase()));
+      clone(seedItems).forEach(item => {
+        const key = String(item.ticker || "").toUpperCase();
+        if (!keys.has(key)) saved.push(item);
+      });
+      return saved;
+    }
+
+    function freshSeedState() {
+      return {
+        rows: clone(seedRows),
+        watchlist: clone(seedWatchlist),
+        holdings: clone(seedHoldings)
+      };
+    }
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function money(value) {
+      const number = Number(value) || 0;
+      if (Math.abs(number) >= 1000) return `$${(number / 1000).toFixed(1)}T`;
+      return `$${number.toFixed(number % 1 ? 1 : 0)}B`;
+    }
+
+    function percent(value) {
+      return `${(Number(value) || 0).toFixed(0)}%`;
+    }
+
+    function median(values) {
+      const nums = values.map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+      if (!nums.length) return 0;
+      const mid = Math.floor(nums.length / 2);
+      return nums.length % 2 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    }
+
+    function filteredRows() {
+      const segment = els.segmentFilter.value;
+      if (segment === "all") return state.rows;
+      if (segment === "Supplier") {
+        return state.rows.filter(row => ["Supplier", "Memory", "Networking", "Server"].includes(row.segment));
+      }
+      return state.rows.filter(row => row.segment === segment);
+    }
+
+    function signalClass(signal) {
+      const normalized = String(signal || "").toLowerCase();
+      if (normalized === "bullish") return "bullish";
+      if (normalized === "core") return "bullish";
+      if (normalized === "speculative") return "risk";
+      if (normalized === "risk") return "risk";
+      if (normalized === "watch") return "watch";
+      return "neutral";
+    }
+
+    function setView(view) {
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.toggle("active", section.id === view);
+      });
+      document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.toggle("active", button.dataset.view === view);
+      });
+      if (view === "overview") drawChart();
+    }
+
+    function addRow() {
+      state.rows.unshift({
+        ticker: "NEW",
+        company: "New Company",
+        segment: "Hyperscaler",
+        quarter: "Next report",
+        capex: 0,
+        yoy: 0,
+        revenue: 0,
+        fcf: 0,
+        cloudGrowth: 0,
+        signal: "Neutral",
+        notes: ""
+      });
+      saveState();
+      render();
+      setView("companies");
+    }
+
+    function updateRow(index, key, value) {
+      const numeric = ["capex", "yoy", "revenue", "fcf", "cloudGrowth"].includes(key);
+      state.rows[index][key] = numeric ? Number(value) : value;
+      saveState();
+      render();
+    }
+
+    function removeRow(index) {
+      state.rows.splice(index, 1);
+      saveState();
+      render();
+    }
+
+    function renderKpis() {
+      const rows = filteredRows();
+      const totalCapex = rows.reduce((sum, row) => sum + (Number(row.capex) || 0), 0);
+      const totalRevenue = rows.reduce((sum, row) => sum + (Number(row.revenue) || 0), 0);
+      const bullish = rows.filter(row => row.signal === "Bullish").length;
+      const watch = rows.filter(row => row.signal === "Watch").length;
+      const risk = rows.filter(row => row.signal === "Risk").length;
+
+      els.totalCapex.textContent = money(totalCapex);
+      els.totalCapexFoot.textContent = `${rows.length} tracked companies`;
+      els.medianYoy.textContent = percent(median(rows.map(row => row.yoy)));
+      els.avgIntensity.textContent = percent(totalRevenue ? (totalCapex / totalRevenue) * 100 : 0);
+      els.signalMix.textContent = `${bullish} / ${watch} / ${risk}`;
+    }
+
+    function renderSignals() {
+      const rows = filteredRows();
+      const sorted = [...rows].sort((a, b) => Number(b.capex) - Number(a.capex)).slice(0, 5);
+      els.signals.innerHTML = sorted.map(row => {
+        const intensity = Number(row.revenue) ? (Number(row.capex) / Number(row.revenue)) * 100 : 0;
+        return `
+          <div class="metric-row">
+            <div>
+              <div class="metric-title">${escapeHtml(row.ticker)} · ${escapeHtml(row.company)}</div>
+              <div class="metric-note">${money(row.capex)} capex · ${percent(row.yoy)} YoY · ${percent(intensity)} intensity</div>
+            </div>
+            <span class="badge ${signalClass(row.signal)}">${escapeHtml(row.signal)}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTable() {
+      els.dataRows.innerHTML = state.rows.map((row, index) => `
+        <tr>
+          <td><input value="${escapeAttr(row.ticker)}" aria-label="Ticker" data-index="${index}" data-key="ticker"></td>
+          <td><input value="${escapeAttr(row.company)}" aria-label="Company" data-index="${index}" data-key="company"></td>
+          <td>
+            <select aria-label="Segment" data-index="${index}" data-key="segment">
+              ${["Hyperscaler", "Supplier", "Networking", "Memory", "Power", "Server", "Devices", "Fintech", "Crypto"].map(segment => `
+                <option value="${segment}" ${row.segment === segment ? "selected" : ""}>${segment}</option>
+              `).join("")}
+            </select>
+          </td>
+          <td><input value="${escapeAttr(row.quarter)}" aria-label="Quarter" data-index="${index}" data-key="quarter"></td>
+          <td><input type="number" step="0.1" value="${escapeAttr(row.capex)}" aria-label="Capex" data-index="${index}" data-key="capex"></td>
+          <td><input type="number" step="1" value="${escapeAttr(row.yoy)}" aria-label="YoY" data-index="${index}" data-key="yoy"></td>
+          <td><input type="number" step="0.1" value="${escapeAttr(row.revenue)}" aria-label="Revenue" data-index="${index}" data-key="revenue"></td>
+          <td><input type="number" step="0.1" value="${escapeAttr(row.fcf)}" aria-label="FCF" data-index="${index}" data-key="fcf"></td>
+          <td><input type="number" step="1" value="${escapeAttr(row.cloudGrowth)}" aria-label="Cloud growth" data-index="${index}" data-key="cloudGrowth"></td>
+          <td>
+            <select aria-label="Signal" data-index="${index}" data-key="signal">
+              ${["Bullish", "Watch", "Neutral", "Risk"].map(signal => `
+                <option value="${signal}" ${row.signal === signal ? "selected" : ""}>${signal}</option>
+              `).join("")}
+            </select>
+          </td>
+          <td><input value="${escapeAttr(row.notes)}" aria-label="Notes" data-index="${index}" data-key="notes"></td>
+          <td><button class="remove-btn" title="Remove row" data-remove="${index}">×</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderWatchlist() {
+      const filter = els.watchFilter.value;
+      const items = state.watchlist.filter(item => filter === "all" || item.layer === filter);
+      els.watchGrid.innerHTML = items.map(item => `
+        <article class="watch-item">
+          <div class="watch-top">
+            <div>
+              <div class="ticker">${escapeHtml(item.ticker)}</div>
+              <div class="small">${escapeHtml(item.layer)} · ${escapeHtml(item.sensitivity)}</div>
+            </div>
+            <span class="badge ${signalClass(item.signal)}">${escapeHtml(item.signal)}</span>
+          </div>
+          <div>
+            <div class="small">Capex exposure</div>
+            <div class="progress" aria-label="${escapeAttr(item.ticker)} exposure">
+              <span style="width:${Math.max(0, Math.min(100, Number(item.exposure) || 0))}%"></span>
+            </div>
+          </div>
+          <div class="small">${percent(item.exposure)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderHoldings() {
+      const holdings = state.holdings || [];
+      const exposure = holdings.length
+        ? holdings.reduce((sum, item) => sum + (Number(item.aiExposure) || 0), 0) / holdings.length
+        : 0;
+      const capexSensitive = holdings.filter(item => ["High", "Very high"].includes(item.capexSensitivity)).length;
+      const core = holdings.filter(item => item.risk === "Core").length;
+      const watch = holdings.filter(item => item.risk === "Watch").length;
+      const speculative = holdings.filter(item => item.risk === "Speculative").length;
+
+      els.holdingCount.textContent = holdings.length;
+      els.holdingExposure.textContent = percent(exposure);
+      els.capexSensitiveCount.textContent = capexSensitive;
+      els.holdingRiskMix.textContent = `${core} / ${watch} / ${speculative}`;
+
+      els.holdingsGrid.innerHTML = holdings.map(item => `
+        <article class="holding-card">
+          <div class="holding-top">
+            <div>
+              <div class="ticker">${escapeHtml(item.ticker)}</div>
+              <div class="holding-name">${escapeHtml(item.name)}</div>
+            </div>
+            <span class="badge ${signalClass(item.risk)}">${escapeHtml(item.risk)}</span>
+          </div>
+          <div>
+            <div class="small">AI exposure</div>
+            <div class="progress" aria-label="${escapeAttr(item.ticker)} AI exposure">
+              <span style="width:${Math.max(0, Math.min(100, Number(item.aiExposure) || 0))}%"></span>
+            </div>
+          </div>
+          <div class="holding-meta">
+            <div class="holding-line"><strong>Layer</strong><span>${escapeHtml(item.layer)}</span></div>
+            <div class="holding-line"><strong>Sensitivity</strong><span>${escapeHtml(item.capexSensitivity)}</span></div>
+            <div class="holding-line"><strong>Role</strong><span>${escapeHtml(item.role)}</span></div>
+          </div>
+          <div class="holding-note">${escapeHtml(item.thesis)}</div>
+        </article>
+      `).join("");
+
+      els.holdingWatchItems.innerHTML = holdings.map(item => `
+        <div class="metric-row">
+          <div>
+            <div class="metric-title">${escapeHtml(item.ticker)} · ${escapeHtml(item.layer)}</div>
+            <div class="metric-note">${escapeHtml(item.watch)}</div>
+          </div>
+          <span class="badge ${signalClass(item.risk)}">${escapeHtml(item.risk)}</span>
+        </div>
+      `).join("");
+    }
+
+    function drawChart() {
+      const canvas = els.chart;
+      const ctx = canvas.getContext("2d");
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(600, rect.width * ratio);
+      canvas.height = Math.max(300, rect.height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const width = canvas.width / ratio;
+      const height = canvas.height / ratio;
+      ctx.clearRect(0, 0, width, height);
+
+      const rows = filteredRows();
+      const labels = rows.map(row => row.ticker);
+      const values = rows.map(row => {
+        if (chartMode === "intensity") return Number(row.revenue) ? (Number(row.capex) / Number(row.revenue)) * 100 : 0;
+        if (chartMode === "fcf") return Number(row.fcf) || 0;
+        return Number(row.capex) || 0;
+      });
+
+      const titles = {
+        capex: "Capex by Company",
+        intensity: "Capex / Revenue",
+        fcf: "Free Cash Flow"
+      };
+      els.chartTitle.textContent = titles[chartMode];
+
+      const max = Math.max(...values, 1) * 1.18;
+      const left = 46;
+      const right = 18;
+      const top = 22;
+      const bottom = 46;
+      const chartWidth = width - left - right;
+      const chartHeight = height - top - bottom;
+      const barGap = 10;
+      const barWidth = Math.max(20, (chartWidth - barGap * (values.length - 1)) / Math.max(values.length, 1));
+
+      ctx.strokeStyle = "#e0e7ea";
+      ctx.lineWidth = 1;
+      ctx.fillStyle = "#617179";
+      ctx.font = "12px Inter, system-ui, sans-serif";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+
+      for (let i = 0; i <= 4; i += 1) {
+        const y = top + chartHeight - (chartHeight * i / 4);
+        const raw = max * i / 4;
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(width - right, y);
+        ctx.stroke();
+        const label = chartMode === "capex" || chartMode === "fcf" ? money(raw) : percent(raw);
+        ctx.fillText(label, left - 8, y);
+      }
+
+      values.forEach((value, index) => {
+        const x = left + index * (barWidth + barGap);
+        const barHeight = chartHeight * (value / max);
+        const y = top + chartHeight - barHeight;
+        const row = rows[index];
+        ctx.fillStyle = colorFor(row.segment, row.signal);
+        roundedRect(ctx, x, y, barWidth, barHeight, 5);
+        ctx.fill();
+
+        ctx.fillStyle = "#172126";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.font = "12px Inter, system-ui, sans-serif";
+        ctx.fillText(labels[index], x + barWidth / 2, top + chartHeight + 12);
+      });
+    }
+
+    function colorFor(segment, signal) {
+      if (signal === "Risk") return "#c33a32";
+      if (segment === "Hyperscaler") return "#2166f3";
+      if (segment === "Power") return "#087b83";
+      if (segment === "Memory") return "#b76b00";
+      if (segment === "Networking") return "#6f4bc4";
+      return "#11835b";
+    }
+
+    function roundedRect(ctx, x, y, width, height, radius) {
+      const r = Math.min(radius, width / 2, height / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + width, y, x + width, y + height, r);
+      ctx.arcTo(x + width, y + height, x, y + height, r);
+      ctx.arcTo(x, y + height, x, y, r);
+      ctx.arcTo(x, y, x + width, y, r);
+      ctx.closePath();
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "ai-capex-dashboard.json";
+      anchor.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (!Array.isArray(parsed.rows)) throw new Error("Missing rows array");
+          state = {
+            rows: parsed.rows,
+            watchlist: Array.isArray(parsed.watchlist) ? parsed.watchlist : clone(seedWatchlist),
+            holdings: Array.isArray(parsed.holdings) ? parsed.holdings : clone(seedHoldings)
+          };
+          saveState();
+          render();
+        } catch (error) {
+          alert("Could not import that JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value);
+    }
+
+    function render() {
+      renderKpis();
+      renderSignals();
+      renderTable();
+      renderWatchlist();
+      renderHoldings();
+      drawChart();
+    }
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+      button.addEventListener("click", () => {
+        setView(button.dataset.view);
+        history.replaceState(null, "", `#${button.dataset.view}`);
+        window.scrollTo({ top: 0, left: 0 });
+      });
+    });
+
+    document.querySelectorAll(".tab").forEach(button => {
+      button.addEventListener("click", () => {
+        chartMode = button.dataset.chart;
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.toggle("active", tab === button));
+        drawChart();
+      });
+    });
+
+    [document.getElementById("addRowTop"), document.getElementById("addRowTable")].forEach(button => {
+      button.addEventListener("click", addRow);
+    });
+
+    els.segmentFilter.addEventListener("change", render);
+    els.watchFilter.addEventListener("change", renderWatchlist);
+
+    els.dataRows.addEventListener("change", event => {
+      const input = event.target;
+      if (input.dataset.index) updateRow(Number(input.dataset.index), input.dataset.key, input.value);
+    });
+
+    els.dataRows.addEventListener("click", event => {
+      const button = event.target.closest("[data-remove]");
+      if (button) removeRow(Number(button.dataset.remove));
+    });
+
+    document.getElementById("exportJson").addEventListener("click", exportData);
+    document.getElementById("importJson").addEventListener("click", () => els.fileInput.click());
+    document.getElementById("resetData").addEventListener("click", () => {
+      state = freshSeedState();
+      saveState();
+      render();
+    });
+    els.fileInput.addEventListener("change", event => {
+      const [file] = event.target.files;
+      if (file) importData(file);
+      event.target.value = "";
+    });
+    window.addEventListener("resize", drawChart);
+
+    render();
+    const queryView = new URLSearchParams(window.location.search).get("view");
+    if (queryView && document.getElementById(queryView)) {
+      setView(queryView);
+      window.scrollTo({ top: 0, left: 0 });
+    } else if (window.location.hash) {
+      const initialView = window.location.hash.replace("#", "");
+      if (document.getElementById(initialView)) {
+        setView(initialView);
+        window.scrollTo({ top: 0, left: 0 });
+      }
+    }
+  </script>
+</body>
+</html>
